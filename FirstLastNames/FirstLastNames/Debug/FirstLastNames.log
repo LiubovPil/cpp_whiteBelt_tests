@@ -1,2 +1,4 @@
 ﻿  FirstLastNames.cpp
+C:\Repos\cpp_whiteBelt_tests\FirstLastNames\FirstLastNames\FirstLastNames.cpp(86,22): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
+C:\Repos\cpp_whiteBelt_tests\FirstLastNames\FirstLastNames\FirstLastNames.cpp(88,21): warning C4834: отмена возвращаемого значения функции с атрибутом "nodiscard"
   FirstLastNames.vcxproj -> C:\Repos\cpp_whiteBelt_tests\FirstLastNames\Debug\FirstLastNames.exe
