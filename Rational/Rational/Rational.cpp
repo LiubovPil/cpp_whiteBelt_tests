@@ -1,6 +1,7 @@
 ﻿// Rational.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
+#include <exception>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -24,15 +25,18 @@ public:
         denominator_value = 1;
     };
     Rational(int numerator, int denominator) {
-        int divisor = GreatesCommonDivisor(numerator, denominator);
+        if (denominator == 0) {
+            throw invalid_argument("Invalid argument");
+        }
+         int divisor = GreatesCommonDivisor(numerator, denominator);
 
-        numerator_value = numerator / divisor;
-        denominator_value = denominator / divisor;
+         numerator_value = numerator / divisor;
+         denominator_value = denominator / divisor;
 
-        if (denominator_value < 0) {
+         if (denominator_value < 0) {
             numerator_value = -numerator_value;
             denominator_value = -denominator_value;
-        }
+         }
     }
 
     int Numerator() const {
@@ -54,24 +58,27 @@ bool operator == (const Rational& lhs, const  Rational& rhs) {
 bool operator < (const Rational& lhs, const  Rational& rhs) {
     return (lhs.Numerator()* rhs.Denominator()) < (rhs.Numerator() * lhs.Denominator()); //return (lhs - rhs).Numerator() < 0;
 };
-Rational operator + (Rational& lhs, Rational& rhs) {
+Rational operator + (const Rational& lhs, const Rational& rhs) {
     return{ lhs.Numerator() * rhs.Denominator() + rhs.Numerator() * lhs.Denominator(),
         lhs.Denominator() * rhs.Denominator() };
 };
 
-Rational operator - (Rational& lhs, Rational& rhs) {
+Rational operator - (const Rational& lhs, const Rational& rhs) {
     return{ lhs.Numerator() * rhs.Denominator() - rhs.Numerator() * lhs.Denominator(),
     lhs.Denominator() * rhs.Denominator() };
 };
 
-Rational operator * (Rational& lhs, Rational& rhs) {
+Rational operator * (const Rational& lhs, const Rational& rhs) {
     return{ lhs.Numerator() * rhs.Numerator(),
     lhs.Denominator() * rhs.Denominator() };
 };
 
-Rational operator / (Rational& lhs, Rational& rhs) {
-    return{ lhs.Numerator() * rhs.Denominator(),
-    lhs.Denominator() * rhs.Numerator() };
+Rational operator / (const Rational& lhs, const Rational& rhs) {
+    if (rhs.Numerator() == 0) {
+        throw domain_error("Division by zero");
+    }
+     return{ lhs.Numerator() * rhs.Denominator(),
+        lhs.Denominator() * rhs.Numerator() };
 };
 
 ostream& operator << (ostream& rational_output, const Rational& rational) {
@@ -90,7 +97,7 @@ istream& operator >> (istream& rational_input, Rational& rational) {
 
 int main()
 {
-    {
+    /*{
         const Rational r(3, 10);
         if (r.Numerator() != 3 || r.Denominator() != 10) {
             cout << "Rational(3, 10) != 3/10" << endl;
@@ -268,6 +275,33 @@ int main()
         }
     }
 
-    cout << "Part 5 OK" << endl;
+    cout << "Part 5 OK" << endl;*/
+    
+    Rational r1, r2;
+    char operation;
+
+    try {
+        cin >> r1 >> operation >> r2;
+
+        if (operation == '+') {
+            cout << r1 << " + " << r2 << " = " << r1 + r2;
+        }
+        else if (operation == '-') {
+            cout << r1 << " - " << r2 << " = " << r1 - r2;
+        }
+        else if (operation == '*') {
+            cout << r1 << " * " << r2 << " = " << r1 * r2;
+        }
+        else {
+            cout << r1 << " / " << r2 << " = " << r1 / r2;
+        }
+    }
+    catch (const invalid_argument& exp_invalid_argument) {
+        cout << exp_invalid_argument.what() << endl;
+    }
+    catch (const domain_error& exp_division_zero) {
+        cout << exp_division_zero.what() << endl;
+    }
+
     return 0;
 }
