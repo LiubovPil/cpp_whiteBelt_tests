@@ -1,0 +1,3 @@
+﻿  Dairy.cpp
+C:\Repos\cpp_whiteBelt_tests\Dairy\Dairy\Dairy.cpp(39,23): warning C4018: >=: несоответствие типов со знаком и без знака
+  Dairy.vcxproj -> C:\Repos\cpp_whiteBelt_tests\Dairy\Debug\Dairy.exe
